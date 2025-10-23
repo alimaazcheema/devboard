@@ -17,15 +17,23 @@ model Project {
   name        String
   description String?
   createdAt   DateTime @default(now())
+  
+  // 🧠 Relationship to User
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
 }
 
 model User {
-  id             String   @id @default(cuid())
+  id             String    @id @default(cuid())
   name           String?
-  email          String   @unique
+  email          String    @unique
   password       String
   emailVerified  DateTime?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  // 🧠 One-to-many
+  projects       Project[]
+  
   @@map("users")
 }
